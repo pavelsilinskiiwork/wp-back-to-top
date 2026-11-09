@@ -1,0 +1,142 @@
+/* CSS custom properties — overridden inline from PHP settings */
+:root {
+	--psbtt-bg:         #1a1a2e;
+	--psbtt-text:       #ffffff;
+	--psbtt-bg-hover:   #6c63ff;
+	--psbtt-text-hover: #ffffff;
+	--psbtt-size:       48px;
+	--psbtt-opacity:    0.85;
+	--psbtt-bottom:     30px;
+	--psbtt-side:       30px;
+	--psbtt-z:          9999;
+	--psbtt-duration:   0.3s;
+}
+
+#psbtt-btn {
+	position: fixed;
+	bottom: var(--psbtt-bottom);
+	right: var(--psbtt-side);
+	width: var(--psbtt-size);
+	height: var(--psbtt-size);
+	margin: 0;
+	padding: 0;
+	background: var(--psbtt-bg);
+	color: var(--psbtt-text);
+	border: none;
+	cursor: pointer;
+	z-index: var(--psbtt-z);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+	font-size: calc(var(--psbtt-size) * 0.45);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	/* hidden until scrolled — the .psbtt-visible class reveals it */
+	opacity: 0;
+	pointer-events: none;
+	transition: background var(--psbtt-duration) ease,
+		color var(--psbtt-duration) ease,
+		opacity var(--psbtt-duration) ease,
+		transform var(--psbtt-duration) ease;
+}
+
+#psbtt-btn.psbtt-pos-left {
+	right: auto;
+	left: var(--psbtt-side);
+}
+
+/* Shapes */
+#psbtt-btn.psbtt-shape-circle  { border-radius: 50%; }
+#psbtt-btn.psbtt-shape-rounded { border-radius: 8px; }
+#psbtt-btn.psbtt-shape-square  { border-radius: 0; }
+
+/* Visible state */
+#psbtt-btn.psbtt-visible {
+	opacity: var(--psbtt-opacity);
+	pointer-events: auto;
+}
+
+/* Hover / focus */
+#psbtt-btn.psbtt-visible:hover,
+#psbtt-btn.psbtt-visible:focus-visible {
+	background: var(--psbtt-bg-hover);
+	color: var(--psbtt-text-hover);
+	opacity: 1;
+}
+
+#psbtt-btn:focus-visible {
+	outline: 2px solid var(--psbtt-bg-hover);
+	outline-offset: 3px;
+}
+
+/* SVG icon */
+#psbtt-btn svg,
+.psbtt-inline svg {
+	width: 55%;
+	height: 55%;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+/* === Animations === */
+
+/* slide up from bottom */
+#psbtt-btn.psbtt-anim-slide {
+	transform: translateY(20px);
+}
+#psbtt-btn.psbtt-anim-slide.psbtt-visible {
+	transform: translateY(0);
+}
+
+/* none — instant */
+#psbtt-btn.psbtt-anim-none {
+	transition: background var(--psbtt-duration) ease,
+		color var(--psbtt-duration) ease;
+}
+
+/* === Inline (shortcode) button === */
+.psbtt-inline {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	position: static;
+	cursor: pointer;
+	background: var(--psbtt-bg);
+	color: var(--psbtt-text);
+	min-width: var(--psbtt-size);
+	height: var(--psbtt-size);
+	border: none;
+	gap: 6px;
+	padding: 0 12px;
+	font-size: 14px;
+	line-height: 1;
+	transition: background 0.2s, color 0.2s;
+}
+.psbtt-inline.psbtt-shape-circle  { border-radius: calc(var(--psbtt-size) / 2); }
+.psbtt-inline.psbtt-shape-rounded { border-radius: 8px; }
+.psbtt-inline.psbtt-shape-square  { border-radius: 0; }
+
+.psbtt-inline svg {
+	width: calc(var(--psbtt-size) * 0.5);
+	height: calc(var(--psbtt-size) * 0.5);
+}
+
+.psbtt-inline:hover,
+.psbtt-inline:focus-visible {
+	background: var(--psbtt-bg-hover);
+	color: var(--psbtt-text-hover);
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+	#psbtt-btn,
+	.psbtt-inline {
+		transition: none !important;
+	}
+	#psbtt-btn.psbtt-anim-slide {
+		transform: none;
+	}
+}
